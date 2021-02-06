@@ -1,9 +1,5 @@
 # Googletest FAQ
 
-<!-- GOOGLETEST_CM0014 DO NOT DELETE -->
-
-<!-- GOOGLETEST_CM0035 DO NOT DELETE -->
-
 ## Why should test suite names and test names not contain underscore?
 
 Note: Googletest reserves underscore (`_`) for special purpose keywords, such as
@@ -182,18 +178,6 @@ template argument, and thus doesn't compile in opt mode when `a` contains a call
 to `htonl()`. It is difficult to make `EXPECT_EQ` bypass the `htonl()` bug, as
 the solution must work with different compilers on various platforms.
 
-`htonl()` has some other problems as described in `//util/endian/endian.h`,
-which defines `ghtonl()` to replace it. `ghtonl()` does the same thing `htonl()`
-does, only without its problems. We suggest you to use `ghtonl()` instead of
-`htonl()`, both in your tests and production code.
-
-`//util/endian/endian.h` also defines `ghtons()`, which solves similar problems
-in `htons()`.
-
-Don't forget to add `//util/endian` to the list of dependencies in the `BUILD`
-file wherever `ghtonl()` and `ghtons()` are used. The library consists of a
-single header file and will not bloat your binary.
-
 ## The compiler complains about "undefined references" to some static const member variables, but I did define them in the class body. What's wrong?
 
 If your class has a static data member:
@@ -350,8 +334,8 @@ You may still want to use `SetUp()/TearDown()` in the following cases:
 *   In the body of a constructor (or destructor), it's not possible to use the
     `ASSERT_xx` macros. Therefore, if the set-up operation could cause a fatal
     test failure that should prevent the test from running, it's necessary to
-    use `abort` <!-- GOOGLETEST_CM0015 DO NOT DELETE --> and abort the whole test executable,
-    or to use `SetUp()` instead of a constructor.
+    use `abort` and abort the whole test
+    executable, or to use `SetUp()` instead of a constructor.
 *   If the tear-down operation could throw an exception, you must use
     `TearDown()` as opposed to the destructor, as throwing in a destructor leads
     to undefined behavior and usually will kill your program right away. Note
